@@ -398,37 +398,37 @@ func DecodeClash(proxys []Proxy, yamlfile string) ([]byte, error) {
 	config["proxies"] = proxies
 	// 往ProxyGroup中插入代理列表
 	// ProxiesNameList := []string{"newProxy", "ceshi"}
-	proxyGroups := config["proxy-groups"].([]interface{})
-	for i, pg := range proxyGroups {
-		proxyGroup, ok := pg.(map[string]interface{})
-		if !ok {
-			continue
-		}
-		// 如果 proxyGroup["proxies"] 是 nil，初始化它为一个空的切片
-		if proxyGroup["proxies"] == nil {
-			proxyGroup["proxies"] = []interface{}{}
-		}
-		// 如果为链式代理的话则不插入返回
-		// log.Print("代理类型为:", proxyGroup["type"])
-		if proxyGroup["type"] == "relay" {
-			break
-		}
-		// 清除 nil 值
-		var validProxies []interface{}
-		for _, p := range proxyGroup["proxies"].([]interface{}) {
-			if p != nil {
-				validProxies = append(validProxies, p)
-			}
-		}
-		// 添加新代理
-		for _, newProxy := range ProxiesNameList {
-			validProxies = append(validProxies, newProxy)
-		}
-		proxyGroup["proxies"] = validProxies
-		proxyGroups[i] = proxyGroup
-	}
+	// proxyGroups := config["proxy-groups"].([]interface{})
+	// for i, pg := range proxyGroups {
+	// 	proxyGroup, ok := pg.(map[string]interface{})
+	// 	if !ok {
+	// 		continue
+	// 	}
+	// 	// 如果 proxyGroup["proxies"] 是 nil，初始化它为一个空的切片
+	// 	if proxyGroup["proxies"] == nil {
+	// 		proxyGroup["proxies"] = []interface{}{}
+	// 	}
+	// 	// 如果为链式代理的话则不插入返回
+	// 	// log.Print("代理类型为:", proxyGroup["type"])
+	// 	if proxyGroup["type"] == "relay" {
+	// 		break
+	// 	}
+	// 	// 清除 nil 值
+	// 	var validProxies []interface{}
+	// 	for _, p := range proxyGroup["proxies"].([]interface{}) {
+	// 		if p != nil {
+	// 			validProxies = append(validProxies, p)
+	// 		}
+	// 	}
+	// 	// 添加新代理
+	// 	for _, newProxy := range ProxiesNameList {
+	// 		validProxies = append(validProxies, newProxy)
+	// 	}
+	// 	proxyGroup["proxies"] = validProxies
+	// 	proxyGroups[i] = proxyGroup
+	// }
 
-	config["proxy-groups"] = proxyGroups
+	// config["proxy-groups"] = proxyGroups
 
 	// 将修改后的内容写回文件
 	newData, err := yaml.Marshal(config)
