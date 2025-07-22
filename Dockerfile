@@ -3,10 +3,11 @@ FROM golang:1.22.2-alpine AS builder
 WORKDIR /app
 COPY . .
 RUN go mod download
-RUN go build -o sublinkX
+# 设置 CGO_ENABLED=0 并明确指定 GOOS 和 GOARCH
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o sublinkX
 
 # Final stage
-FROM alpine:latest
+FROM alpine
 WORKDIR /app
 
 # 设置时区为 Asia/Shanghai
